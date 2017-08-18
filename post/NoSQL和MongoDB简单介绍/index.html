@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="张旭在 Github 上的个人博客">
+    <meta name="keyword" content="null">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="/myico.ico">
+    <link rel="alternate" type="application/atom+xml" title="数据菜园" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        NoSQL和MongoDB简单介绍｜数据菜园
+        
+    </title>
+
+    <link rel="canonical" href="http://zhangxu999.github.io/post/NoSQL和MongoDB简单介绍/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('//o7bkkhiex.bkt.clouddn.com/lion-blur-bg.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    数据菜园
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+                        <li>
+                            <a href="/tags/">tags</a>
+                        </li>
+							
+						
+                    
+					
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img"
+     src="http://oco8bvfr8.qnssl.com/16-8-new-bg.jpg?imageView2/1/w/800/h/300/interlace/1/q/80">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('http://oco8bvfr8.qnssl.com/16-8-new-bg.jpg?imageView2/1/w/800/h/300/interlace/1/q/80')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>NoSQL和MongoDB简单介绍</h1>
+                    
+                    <span class="meta">
+                         作者 张旭
+                        <span>
+                          日期 2017-02-09
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#NoSQL"
+                           title="NoSQL">NoSQL</a>
+                        
+                        <a class="tag" href="/tags/#mongoDB"
+                           title="mongoDB">mongoDB</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            NoSQL和MongoDB简单介绍
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <h2 id="什么是NoSQL"><a href="#什么是NoSQL" class="headerlink" title="什么是NoSQL?"></a>什么是NoSQL?</h2><p>NoSQL，指的是非关系型的数据库。NoSQL有时也称作Not Only SQL的缩写，是对不同于传统的关系型数据库的数据库管理系统的统称。<br>NoSQL用于超大规模数据的存储。（例如谷歌或Facebook每天为他们的用户收集万亿比特的数据）。这些类型的数据存储不需要固定的模式，无需多余操作就可以横向扩展。</p>
+<h2 id="为什么使用NoSQL"><a href="#为什么使用NoSQL" class="headerlink" title="为什么使用NoSQL ?"></a>为什么使用NoSQL ?</h2><p>今天我们可以通过第三方平台（如：Google,Facebook等）可以很容易的访问和抓取数据。用户的个人信息，社交网络，地理位置，用户生成的数据和用户操作日志已经成倍的增加。我们如果要对这些用户数据进行挖掘，那SQL数据库已经不适合这些应用了, NoSQL数据库的发展也却能很好的处理这些大的数据。</p>
+<h2 id="RDBMS-vs-NoSQL"><a href="#RDBMS-vs-NoSQL" class="headerlink" title="RDBMS vs NoSQL"></a>RDBMS vs NoSQL</h2><p>RDBMS </p>
+<ul>
+<li>高度组织化结构化数据 </li>
+<li>结构化查询语言（SQL） (SQL) </li>
+<li>数据和关系都存储在单独的表中。 </li>
+<li>数据操纵语言，数据定义语言 </li>
+<li>严格的一致性</li>
+<li>基础事务<br>NoSQL </li>
+<li>代表着不仅仅是SQL</li>
+<li>没有声明性查询语言</li>
+<li>没有预定义的模式<br>-键 - 值对存储，列存储，文档存储，图形数据库</li>
+<li>最终一致性，而非ACID属性</li>
+<li>非结构化和不可预知的数据</li>
+<li>CAP定理 </li>
+<li>高性能，高可用性和可伸缩性</li>
+</ul>
+<h1 id="Mongodb-安装"><a href="#Mongodb-安装" class="headerlink" title="Mongodb 安装"></a>Mongodb 安装</h1><h3 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h3><ul>
+<li><a href="https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-ubuntu1604-3.4.2.tgz" target="_blank" rel="external">https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-ubuntu1604-3.4.2.tgz</a></li>
+<li>其他版本： <a href="https://www.mongodb.com/download-center?jmp=homepage#community" target="_blank" rel="external">https://www.mongodb.com/download-center?jmp=homepage#community</a></li>
+</ul>
+<h3 id="解压"><a href="#解压" class="headerlink" title="解压"></a>解压</h3><p>tar -zxvf mongodb-linux-x86_64-ubuntu1604-3.4.2.tgz</p>
+<h3 id="将解压文件放到一个合适地方，"><a href="#将解压文件放到一个合适地方，" class="headerlink" title="将解压文件放到一个合适地方，"></a>将解压文件放到一个合适地方，</h3><p>mkdir -p mongodb<br>cp -R -n mongodb-linux-x86_64-3.4.2/ mongodb<br>Note：注意要有正确的读写权限</p>
+<h3 id="设置环境变量"><a href="#设置环境变量" class="headerlink" title="设置环境变量"></a>设置环境变量</h3><p>为了是mongodb命令能在任意文件夹下执行<br>add the following line to your shell’s rc file (e.g. ~/.bashrc)</p>
+<p>export PATH=<mongodb-install-directory>/bin:$PATH<br>source ~/.bashrc</mongodb-install-directory></p>
+<h3 id="创建数据存放文件夹（注意权限"><a href="#创建数据存放文件夹（注意权限" class="headerlink" title="创建数据存放文件夹（注意权限)"></a>创建数据存放文件夹（注意权限)</h3><p>mkdir -p /data/db</p>
+<h3 id="启动mongodb-服务器"><a href="#启动mongodb-服务器" class="headerlink" title="启动mongodb 服务器"></a>启动mongodb 服务器</h3><p>可以添加子命令，如IP,端口，数据文件位置<br>mongod</p>
+<h1 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h1><p>可以添加子命令，如IP,端口，数据文件位置</p>
+<p>mongo</p>
+<h1 id="MongoDB-概念解析"><a href="#MongoDB-概念解析" class="headerlink" title="MongoDB 概念解析"></a>MongoDB 概念解析</h1><table><br><tbody><tr><br><th>SQL术语/概念</th><br><th>MongoDB术语/概念</th><br><th>解释/说明</th><br></tr><br><tr><br><td>database</td><br><td>database</td><br><td>数据库</td><br></tr><br><tr><br><td>table</td><br><td>collection</td><br><td>数据库表/集合</td><br></tr><br><tr><br><td>row</td><br><td>document</td><br><td>数据记录行/文档</td><br></tr><br><tr><br><td>column</td><br><td>field</td><br><td>数据字段/域</td><br></tr><br><tr><br><td>index</td><br><td>index</td><br><td>索引</td><br></tr><br><tr><br><td>table joins</td><br><td>&nbsp;</td><br><td>表连接,MongoDB不支持</td><br></tr><br><tr><br><td>primary key</td><br><td>primary key</td><br><td>主键,MongoDB自动将_id字段设置为主键</td><br></tr><br></tbody><br></table><br><img src="/post/NoSQL和MongoDB简单介绍/Figure-1-Mapping-Table-to-Collection-1.png" alt="Figure-1-Mapping-Table-to-Collection-1.png" title="Figure-1-Mapping-Table-to-Collection-1.png"><br><br><br>## 数据库<br>一个mongodb中可以建立多个数据库。<br>MongoDB的默认数据库为”db”，该数据库存储在data目录中。<br>MongoDB的单个实例可以容纳多个独立的数据库，每一个都有自己的集合和权限，不同的数据库也放置在不同的文件中。<br>“show dbs” 命令可以显示所有数据的列表。<br>## 文档<br>文档是一个键值(key-value)对(即BSON)。MongoDB 的文档不需要设置相同的字段，并且相同的字段不需要相同的数据类型，这与关系型数据库有很大的区别，也是 MongoDB 非常突出的特点。<br>一个简单的文档例子如下：<br>RDBMS 与 MongoDB 对应的术语：<br><table class="reference"><br><tbody><tr><br><th style="width:50%;">RDBMS</th><br><th>MongoDB</th><br></tr><br><tr><br><td>数据库</td><br><td>数据库</td><br></tr><br><tr><br><td>表格</td><br><td>集合</td><br></tr><br><tr><br><td>行</td><br><td>文档</td><br></tr><br><tr><br><td>列</td><br><td>字段</td><br></tr><br><tr><br><td>表联合</td><br><td>嵌入文档</td><br></tr><br><tr><br><td>主键</td><br><td>主键 (MongoDB 提供了 key  为 _id )</td><br></tr><br><tr><br><th colspan="2" style="text-align:center;">数据库服务和客户端</th><br></tr><br><tr><br><td>Mysqld/Oracle</td><br><td>mongod</td><br></tr><br><tr><br><td>mysql/sqlplus</td><br><td>mongo</td><br></tr><br></tbody></table>
+
+<p>需要注意的是：</p>
+<ol>
+<li>文档中的键/值对是有序的。<br>文档中的值不仅可以是在双引号里面的字符串，还可以是其他几种数据类型（甚至可以是整个嵌入的文档)。</li>
+<li>MongoDB区分类型和大小写。</li>
+<li>MongoDB的文档不能有重复的键。</li>
+<li>文档的键是字符串。除了少数例外情况，键可以使用任意UTF-8字符。</li>
+</ol>
+<h2 id="集合"><a href="#集合" class="headerlink" title="集合"></a>集合</h2><p>集合就是 MongoDB 文档组，类似于 RDBMS （关系数据库管理系统：Relational Database Management System)中的表格。<br>集合存在于数据库中，集合没有固定的结构，这意味着你在对集合可以插入不同格式和类型的数据，但通常情况下我们插入集合的数据都会有一定的关联性。<br>比如，我们可以将以下不同数据结构的文档插入到集合中：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line">&#123;<span class="string">"site"</span>:<span class="string">"www.baidu.com"</span>&#125;</div><div class="line">&#123;<span class="string">"site"</span>:<span class="string">"www.google.com"</span>,<span class="string">"name"</span>:<span class="string">"Google"</span>&#125;</div><div class="line">&#123;<span class="string">"site"</span>:<span class="string">"www.runoob.com"</span>,<span class="string">"name"</span>:<span class="string">"菜鸟教程"</span>,<span class="string">"num"</span>:<span class="number">5</span>&#125;</div></pre></td></tr></table></figure>
+<pre><code>{&apos;name&apos;: &apos;菜鸟教程&apos;, &apos;num&apos;: 5, &apos;site&apos;: &apos;www.runoob.com&apos;}
+</code></pre><h2 id="元数据"><a href="#元数据" class="headerlink" title="元数据"></a>元数据</h2><p>数据库的信息是存储在集合中。它们使用了系统的命名空间：</p>
+<p><table></table></p>
+<p><tbody></tbody></p>
+<p><tr></tr></p>
+<p><th>集合命名空间</th></p>
+<p><th>描述</th><br></p>
+<p><tr></tr></p>
+<p><td>dbname.system.namespaces</td></p>
+<p><td>列出所有名字空间。</td><br></p>
+<p><tr></tr></p>
+<p><td>dbname.system.indexes</td></p>
+<p><td>列出所有索引。</td><br></p>
+<p><tr></tr></p>
+<p><td>dbname.system.profile</td></p>
+<p><td>包含数据库概要(profile)信息。</td><br></p>
+<p><tr></tr></p>
+<p><td>dbname.system.users</td></p>
+<p><td>列出所有可访问数据库的用户。</td><br></p>
+<p><tr></tr></p>
+<p><td>dbname.local.sources</td></p>
+<p><td>包含复制对端（slave）的服务器信息和状态。</td><br><br><br></p>
+<h1 id="MongoDB-数据类型"><a href="#MongoDB-数据类型" class="headerlink" title="MongoDB 数据类型"></a>MongoDB 数据类型</h1><p>下表为MongoDB中常用的几种数据类型。</p>
+<p><table></table></p>
+<p><tbody><tr></tr></tbody></p>
+<p><th>数据类型</th></p>
+<p><th>描述</th><br></p>
+<p><tr><td>String</td><td>字符串。存储数据常用的数据类型。在 MongoDB 中，UTF-8 编码的字符串才是合法的。   </td></tr></p>
+<p><tr><td>Integer</td><td>整型数值。用于存储数值。根据你所采用的服务器，可分为 32 位或 64 位。  </td></tr></p>
+<p><tr><td>Boolean</td><td>布尔值。用于存储布尔值（真/假）。  </td></tr></p>
+<p><tr><td>Double</td><td>双精度浮点值。用于存储浮点值。  </td></tr></p>
+<p><tr><td>Min/Max keys</td><td>将一个值与 BSON（二进制的 JSON）元素的最低值和最高值相对比。  </td></tr></p>
+<p><tr><td>Arrays</td><td>用于将数组或列表或多个值存储为一个键。  </td></tr></p>
+<p><tr><td>Timestamp</td><td>时间戳。记录文档修改或添加的具体时间。  </td></tr></p>
+<p><tr><td>Object</td><td>用于内嵌文档。  </td></tr></p>
+<p><tr><td>Null</td><td>用于创建空值。  </td></tr></p>
+<p><tr><td>Symbol</td><td>符号。该数据类型基本上等同于字符串类型，但不同的是，它一般用于采用特殊符号类型的语言。</td></tr></p>
+<p><tr><td>Date</td><td>日期时间。用 UNIX 时间格式来存储当前日期或时间。你可以指定自己的日期时间：创建 Date 对象，传入年月日信息。  </td></tr></p>
+<p><tr><td>Object ID</td><td>对象 ID。用于创建文档的 ID。  </td></tr></p>
+<p><tr><td>Binary Data</td><td>二进制数据。用于存储二进制数据。</td></tr></p>
+<p><tr><td>Code</td><td>代码类型。用于在文档中存储 JavaScript 代码。</td></tr></p>
+<p><tr><td>Regular expression</td><td>正则表达式类型。用于存储正则表达式。</td></tr><br><br></p>
+<h1 id="参考-http-www-runoob-com-mongodb-mongodb-databases-documents-collections-html"><a href="#参考-http-www-runoob-com-mongodb-mongodb-databases-documents-collections-html" class="headerlink" title="参考 http://www.runoob.com/mongodb/mongodb-databases-documents-collections.html"></a>参考 <a href="http://www.runoob.com/mongodb/mongodb-databases-documents-collections.html" target="_blank" rel="external">http://www.runoob.com/mongodb/mongodb-databases-documents-collections.html</a></h1><figure class="highlight python"><table><tr><td class="code"><pre><div class="line"></div><div class="line"></div></pre></td></tr></table></figure>
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/post/pymongo库的简单用法/" data-toggle="tooltip" data-placement="top"
+                           title="pymongo库的简单用法">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/post/hello-world/" data-toggle="tooltip" data-placement="top"
+                           title="Hello World">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+
+                
+
+
+                <!--加入新的评论系统-->
+                
+                <!-- 来必力City版安装代码 -->
+                <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTMwMy81ODcx">
+                    <script type="text/javascript">
+                        (function(d, s) {
+                            var j, e = d.getElementsByTagName(s)[0];
+
+                            if (typeof LivereTower === 'function') { return; }
+
+                            j = d.createElement(s);
+                            j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+                            j.async = true;
+
+                            e.parentNode.insertBefore(j, e);
+                        })(document, 'script');
+                    </script>
+                    <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+                </div>
+                <!-- City版安装代码已完成 -->
+                
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#什么是NoSQL"><span class="toc-text">什么是NoSQL?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#为什么使用NoSQL"><span class="toc-text">为什么使用NoSQL ?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RDBMS-vs-NoSQL"><span class="toc-text">RDBMS vs NoSQL</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Mongodb-安装"><span class="toc-text">Mongodb 安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#下载"><span class="toc-text">下载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#解压"><span class="toc-text">解压</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#将解压文件放到一个合适地方，"><span class="toc-text">将解压文件放到一个合适地方，</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#设置环境变量"><span class="toc-text">设置环境变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建数据存放文件夹（注意权限"><span class="toc-text">创建数据存放文件夹（注意权限)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#启动mongodb-服务器"><span class="toc-text">启动mongodb 服务器</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#使用"><span class="toc-text">使用</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#MongoDB-概念解析"><span class="toc-text">MongoDB 概念解析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#集合"><span class="toc-text">集合</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#元数据"><span class="toc-text">元数据</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#MongoDB-数据类型"><span class="toc-text">MongoDB 数据类型</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考-http-www-runoob-com-mongodb-mongodb-databases-documents-collections-html"><span class="toc-text">参考 http://www.runoob.com/mongodb/mongodb-databases-documents-collections.html</span></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#NoSQL"
+                           title="NoSQL">NoSQL</a>
+                        
+                        <a class="tag" href="/tags/#mongoDB"
+                           title="mongoDB">mongoDB</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <div style="margin-top: 20px;">
+                    <h5 class="text-center">FRIENDS</h5>
+                    <ul class="list-inline text-center">
+                        
+                        <li><a href="https://monkey0105.github.io/">monkey0105</a></li>
+                        
+                    </ul>
+                </div>
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                    <li>
+                        <a target="_blank" href="https://twitter.com/xuzhang999">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/zhang-xu-4-1">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/zhangxu999">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/zhangxu999">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; 数据菜园 2017
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://github.com/zhangxu999">zhangxu999</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://zhangxu999.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-102034353-1';
+    var _gaDomain = 'auto';
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    var _baId = '5ed6f220ecf21881de873de55b319f7a';
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?" + _baId;
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','null','2.0.0');
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="avatar.jpg">
+</body>
+
+</html>

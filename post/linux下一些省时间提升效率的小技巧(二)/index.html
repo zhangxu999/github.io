@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="张旭在 Github 上的个人博客">
+    <meta name="keyword" content="null">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="/myico.ico">
+    <link rel="alternate" type="application/atom+xml" title="数据菜园" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        linux 下一些省时间提升效率的小技巧(二)｜数据菜园
+        
+    </title>
+
+    <link rel="canonical" href="http://zhangxu999.github.io/post/linux下一些省时间提升效率的小技巧(二)/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('//o7bkkhiex.bkt.clouddn.com/lion-blur-bg.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    数据菜园
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+                        <li>
+                            <a href="/tags/">tags</a>
+                        </li>
+							
+						
+                    
+					
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img"
+     src="http://oco8bvfr8.qnssl.com/16-8-new-bg.jpg?imageView2/1/w/800/h/300/interlace/1/q/80">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('http://oco8bvfr8.qnssl.com/16-8-new-bg.jpg?imageView2/1/w/800/h/300/interlace/1/q/80')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>linux 下一些省时间提升效率的小技巧(二)</h1>
+                    
+                    <span class="meta">
+                         作者 张旭
+                        <span>
+                          日期 2017-02-22
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#Ubuntu"
+                           title="Ubuntu">Ubuntu</a>
+                        
+                        <a class="tag" href="/tags/#提升效率"
+                           title="提升效率">提升效率</a>
+                        
+                        <a class="tag" href="/tags/#小技巧"
+                           title="小技巧">小技巧</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            linux 下一些省时间提升效率的小技巧(二)
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <h1 id="翻墙技术-代理技术"><a href="#翻墙技术-代理技术" class="headerlink" title="翻墙技术/代理技术"></a>翻墙技术/代理技术</h1><h2 id="Ubuntu-全局代理"><a href="#Ubuntu-全局代理" class="headerlink" title="Ubuntu 全局代理"></a>Ubuntu 全局代理</h2><p>1： 操作路径： 左上角-&gt;System Settings-&gt;Network-&gt;Network proxy<br>结果如下：</p>
+<img src="/post/linux下一些省时间提升效率的小技巧(二)/proxy.png" alt="proxy.png" title="proxy.png">
+<p>2： Method 选Manual<br>如图:<br><img src="/post/linux下一些省时间提升效率的小技巧(二)/proxy2.png" alt="proxy2.png" title="proxy2.png"><br>可以配合本机的其他代理软件，填入相应的端口和IP ，点击APPly System wide 即可</p>
+<h2 id="翻墙"><a href="#翻墙" class="headerlink" title="翻墙"></a>翻墙</h2><p>打开Showsocks</p>
+<p>Firefox 已有教程，略<br>CHrome 下代理的工作： </p>
+<ol>
+<li>chrome应用商店 下载  <a href="https://chrome.google.com/webstore/detail/proxy-switchyomega/padekgcemlokbadohgkifijomclgjgif" target="_blank" rel="external">Proxy SwitchyOmega</a> </li>
+</ol>
+<h3 id="多个代理端口添加"><a href="#多个代理端口添加" class="headerlink" title="多个代理端口添加"></a>多个代理端口添加</h3><p>点击 New Profile<br> <img src="/post/linux下一些省时间提升效率的小技巧(二)/proxy_port.png" alt="proxy_port.png" title="proxy_port.png"></p>
+<h3 id="屏蔽站点配置"><a href="#屏蔽站点配置" class="headerlink" title="屏蔽站点配置"></a>屏蔽站点配置</h3><p>如下图：这是 switchyOmega 的配置页面<br> <img src="/post/linux下一些省时间提升效率的小技巧(二)/switchyomega.png" alt="switchyomega.png" title="switchyomega.png"></p>
+<p>Rule List Config 中的链接是 <a href="https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt" target="_blank" rel="external">https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt</a></p>
+<p> 这个链接会不断更新被 GFW 屏蔽的域名</p>
+<h3 id="当前代理更换-单个单点配置"><a href="#当前代理更换-单个单点配置" class="headerlink" title="当前代理更换/单个单点配置"></a>当前代理更换/单个单点配置</h3> <img src="/post/linux下一些省时间提升效率的小技巧(二)/changedefalut.png" alt="changedefalut.png" title="changedefalut.png">
+<h4 id="临时代理"><a href="#临时代理" class="headerlink" title="临时代理"></a>临时代理</h4><p>点击漏斗状图标，即可将 当前访问网站临时代理一下，<br>浏览器下次重启失效。</p>
+<h4 id="更改单个域名的代理走向"><a href="#更改单个域名的代理走向" class="headerlink" title="更改单个域名的代理走向"></a>更改单个域名的代理走向</h4><p>点击 Add Condition 更改代理保存即可<br><img src="/post/linux下一些省时间提升效率的小技巧(二)/changoneproxy.png" alt="changoneproxy.png" title="changoneproxy.png"></p>
+<h1 id="Ubuntu-远程文件-图像化操作"><a href="#Ubuntu-远程文件-图像化操作" class="headerlink" title="Ubuntu  远程文件 图像化操作"></a>Ubuntu  远程文件 图像化操作</h1><p>有时候需要操作远程主机上的文件。如何才能在本地方便的操作？  Ubuntu 桌面提供了这样一套工具</p>
+<h2 id="文件系统-图像化操作"><a href="#文件系统-图像化操作" class="headerlink" title="文件系统 图像化操作"></a>文件系统 图像化操作</h2><img src="/post/linux下一些省时间提升效率的小技巧(二)/UbuntuFile0.png" alt="UbuntuFile0.png" title="UbuntuFile0.png">
+<img src="/post/linux下一些省时间提升效率的小技巧(二)/UbuntuFile.png" alt="UbuntuFile.png" title="UbuntuFile.png">
+<p>URI 输入格式：<br><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">sftp://&lt;Username&gt;@&lt;IP&gt;&lt;logindir&gt;</div></pre></td></tr></table></figure></p>
+<h2 id="Pycharm-或其他IDE-编辑器操作"><a href="#Pycharm-或其他IDE-编辑器操作" class="headerlink" title="Pycharm 或其他IDE 编辑器操作"></a>Pycharm 或其他IDE 编辑器操作</h2><p>有些IDE或编辑器并未使用操作系统提供的标准的文件选择器，如何在这些工具中操作 远程文件呢？</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="number">1.</span> 获取远程目录</div><div class="line">在Ubuntu文件系统中 ，进入远程目录下  ，右击选： Open <span class="keyword">in</span> local teminal :</div><div class="line">    获取 在本机文件的远程目录path.</div></pre></td></tr></table></figure>
+<ol>
+<li>然后 按照路径在其他IDE或编辑器中打开远程文件即可。</li>
+</ol>
+<img src="/post/linux下一些省时间提升效率的小技巧(二)/pycharmremote.png" alt="pycharmremote.png" title="pycharmremote.png">
+<h1 id="两个好用的工具"><a href="#两个好用的工具" class="headerlink" title="两个好用的工具"></a>两个好用的工具</h1><h2 id="sublime-Text"><a href="#sublime-Text" class="headerlink" title="sublime Text"></a>sublime Text</h2><p>优雅高效的编辑器<br>优点：快速，简洁，操作流畅<br><img src="/post/linux下一些省时间提升效率的小技巧(二)/sublimetext.png" alt="sublimetext.png" title="sublimetext.png"></p>
+<h2 id="Terminator"><a href="#Terminator" class="headerlink" title="Terminator"></a>Terminator</h2><p>强大的Shell  多界面，多窗口操作，群组操作，窗口重命名<br><img src="/post/linux下一些省时间提升效率的小技巧(二)/teminator.png" alt="teminator.png" title="teminator.png"></p>
+
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/post/linux下一些省时间提升效率的小技巧(一)/" data-toggle="tooltip" data-placement="top"
+                           title="linux 下一些省时间提升效率的小技巧(一)">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/post/pymongo库的简单用法/" data-toggle="tooltip" data-placement="top"
+                           title="pymongo库的简单用法">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+
+                
+
+
+                <!--加入新的评论系统-->
+                
+                <!-- 来必力City版安装代码 -->
+                <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTMwMy81ODcx">
+                    <script type="text/javascript">
+                        (function(d, s) {
+                            var j, e = d.getElementsByTagName(s)[0];
+
+                            if (typeof LivereTower === 'function') { return; }
+
+                            j = d.createElement(s);
+                            j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+                            j.async = true;
+
+                            e.parentNode.insertBefore(j, e);
+                        })(document, 'script');
+                    </script>
+                    <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+                </div>
+                <!-- City版安装代码已完成 -->
+                
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#翻墙技术-代理技术"><span class="toc-text">翻墙技术/代理技术</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Ubuntu-全局代理"><span class="toc-text">Ubuntu 全局代理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#翻墙"><span class="toc-text">翻墙</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#多个代理端口添加"><span class="toc-text">多个代理端口添加</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#屏蔽站点配置"><span class="toc-text">屏蔽站点配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#当前代理更换-单个单点配置"><span class="toc-text">当前代理更换/单个单点配置</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#临时代理"><span class="toc-text">临时代理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#更改单个域名的代理走向"><span class="toc-text">更改单个域名的代理走向</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Ubuntu-远程文件-图像化操作"><span class="toc-text">Ubuntu  远程文件 图像化操作</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#文件系统-图像化操作"><span class="toc-text">文件系统 图像化操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Pycharm-或其他IDE-编辑器操作"><span class="toc-text">Pycharm 或其他IDE 编辑器操作</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#两个好用的工具"><span class="toc-text">两个好用的工具</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#sublime-Text"><span class="toc-text">sublime Text</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Terminator"><span class="toc-text">Terminator</span></a></li></ol></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#Ubuntu"
+                           title="Ubuntu">Ubuntu</a>
+                        
+                        <a class="tag" href="/tags/#提升效率"
+                           title="提升效率">提升效率</a>
+                        
+                        <a class="tag" href="/tags/#小技巧"
+                           title="小技巧">小技巧</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <div style="margin-top: 20px;">
+                    <h5 class="text-center">FRIENDS</h5>
+                    <ul class="list-inline text-center">
+                        
+                        <li><a href="https://monkey0105.github.io/">monkey0105</a></li>
+                        
+                    </ul>
+                </div>
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                    <li>
+                        <a target="_blank" href="https://twitter.com/xuzhang999">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/zhang-xu-4-1">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/zhangxu999">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/zhangxu999">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; 数据菜园 2017
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://github.com/zhangxu999">zhangxu999</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://zhangxu999.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-102034353-1';
+    var _gaDomain = 'auto';
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    var _baId = '5ed6f220ecf21881de873de55b319f7a';
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?" + _baId;
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','null','2.0.0');
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="avatar.jpg">
+</body>
+
+</html>

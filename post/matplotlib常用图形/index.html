@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="张旭在 Github 上的个人博客">
+    <meta name="keyword" content="null">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="/myico.ico">
+    <link rel="alternate" type="application/atom+xml" title="数据菜园" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        matplotlib常用图形｜数据菜园
+        
+    </title>
+
+    <link rel="canonical" href="http://zhangxu999.github.io/post/matplotlib常用图形/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('//o7bkkhiex.bkt.clouddn.com/lion-blur-bg.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    数据菜园
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+                        <li>
+                            <a href="/tags/">tags</a>
+                        </li>
+							
+						
+                    
+					
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img"
+     src="http://oco8bvfr8.qnssl.com/16-8-new-bg.jpg?imageView2/1/w/800/h/300/interlace/1/q/80">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('http://oco8bvfr8.qnssl.com/16-8-new-bg.jpg?imageView2/1/w/800/h/300/interlace/1/q/80')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>matplotlib常用图形</h1>
+                    
+                    <span class="meta">
+                         作者 张旭
+                        <span>
+                          日期 2017-03-15
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#matplotlib"
+                           title="matplotlib">matplotlib</a>
+                        
+                        <a class="tag" href="/tags/#可视化"
+                           title="可视化">可视化</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            matplotlib常用图形
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <h1 id="解决中文字体不能显示问题"><a href="#解决中文字体不能显示问题" class="headerlink" title="解决中文字体不能显示问题"></a>解决中文字体不能显示问题</h1><p><a href="http://www.pythoner.com/200.html" target="_blank" rel="external">http://www.pythoner.com/200.html</a></p>
+<ol>
+<li><p>进入Python安装目录下的Lib\site-packages\matplotlib\mpl-data目录，</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><span class="built_in">cd</span> (你的python 目录)\site-packages\matplotlib\mpl-data</div></pre></td></tr></table></figure>
+</li>
+<li><p>打开matplotlibrc文件</p>
+</li>
+<li><p>删除font.family和font.sans-serif两行前的#，</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><div class="line"><span class="selector-tag">font</span><span class="selector-class">.family</span>         : <span class="selector-tag">sans-ser</span></div><div class="line"><span class="selector-tag">font</span><span class="selector-class">.sans-serif</span>     : <span class="selector-tag">DejaVu</span> <span class="selector-tag">Sans</span>, <span class="selector-tag">Bitstream</span> <span class="selector-tag">Vera</span> <span class="selector-tag">Sans</span>, <span class="selector-tag">Lucida</span> <span class="selector-tag">Grande</span>, <span class="selector-tag">Verdana</span>, <span class="selector-tag">Geneva</span>, <span class="selector-tag">Lucid</span>, <span class="selector-tag">Arial</span>, <span class="selector-tag">Helvetica</span>, <span class="selector-tag">Avant</span> <span class="selector-tag">Garde</span>, <span class="selector-tag">sans-serif</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>并在font.sans-serif后添加微软雅黑字体（Microsoft YaHei）</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><div class="line"><span class="selector-tag">font</span><span class="selector-class">.family</span>         : <span class="selector-tag">sans-ser</span></div><div class="line"><span class="selector-tag">font</span><span class="selector-class">.sans-serif</span>     : <span class="selector-tag">Microsoft</span> <span class="selector-tag">YaHei</span>, <span class="selector-tag">DejaVu</span> <span class="selector-tag">Sans</span>, <span class="selector-tag">Bitstream</span> <span class="selector-tag">Vera</span> <span class="selector-tag">Sans</span>, <span class="selector-tag">Lucida</span> <span class="selector-tag">Grande</span>, <span class="selector-tag">Verdana</span>, <span class="selector-tag">Geneva</span>, <span class="selector-tag">Lucid</span>, <span class="selector-tag">Arial</span>, <span class="selector-tag">Helvetica</span>, <span class="selector-tag">Avant</span> <span class="selector-tag">Garde</span>, <span class="selector-tag">sans-serif</span></div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="引入seaborn"><a href="#引入seaborn" class="headerlink" title="引入seaborn"></a>引入seaborn</h2><p>为了画图更漂亮，引入seaborn。但中文又乱码了，真是个美丽的错误</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> seaborn <span class="keyword">as</span> sns</div><div class="line">sns.set_style(<span class="string">"darkgrid"</span>,&#123;<span class="string">"font.sans-serif"</span>:[<span class="string">'Microsoft YaHei'</span>, <span class="string">'Arial'</span>]&#125;)</div><div class="line"><span class="comment">#字体填入你的机器支持的字体名称</span></div></pre></td></tr></table></figure>
+<p><a href="https://github.com/mwaskom/seaborn/issues/1009" target="_blank" rel="external">https://github.com/mwaskom/seaborn/issues/1009</a></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> os</div><div class="line">os.path</div></pre></td></tr></table></figure>
+<pre><code>&lt;module &apos;posixpath&apos; from &apos;/home/xu/venv/lib/python3.5/posixpath.py&apos;&gt;
+</code></pre><h1 id="Simple-Plot"><a href="#Simple-Plot" class="headerlink" title="Simple Plot"></a>Simple Plot</h1><figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="keyword">import</span> seaborn <span class="keyword">as</span> sns</div><div class="line">sns.set_style(<span class="string">"darkgrid"</span>,&#123;<span class="string">"font.sans-serif"</span>:[<span class="string">'Microsoft YaHei'</span>, <span class="string">'Arial'</span>]&#125;)</div><div class="line"></div><div class="line">t = np.arange(<span class="number">0.0</span>, <span class="number">2.0</span>, <span class="number">0.01</span>)</div><div class="line">s = <span class="number">1</span> + np.sin(<span class="number">2</span>*np.pi*t)</div><div class="line">plt.plot(t, s)</div><div class="line"></div><div class="line">plt.xlabel(<span class="string">'time (s)'</span>)</div><div class="line">plt.ylabel(<span class="string">'voltage (mV)'</span>)</div><div class="line">plt.title(<span class="string">u'实例'</span>)</div><div class="line">plt.grid(<span class="keyword">True</span>)</div><div class="line">plt.savefig(<span class="string">"test.png"</span>)</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<p><img src="output_6_0.png" alt="png"></p>
+<p><img src="test.png" alt="Alt text"></p>
+<h1 id="Subplot-demo"><a href="#Subplot-demo" class="headerlink" title="Subplot demo"></a>Subplot demo</h1><figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line">plt.figure(figsize=(<span class="number">16</span>,<span class="number">9</span>))</div><div class="line"></div><div class="line">x1=[<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>]</div><div class="line">x2 = np.linspace(<span class="number">0.0</span>, <span class="number">2.0</span>)</div><div class="line"></div><div class="line">y1 = [<span class="number">-1</span>,<span class="number">-10</span>,<span class="number">3</span>,<span class="number">9</span>,<span class="number">-4</span>,<span class="number">5</span>]</div><div class="line">y2 = np.cos(<span class="number">2</span> * np.pi * x2)</div><div class="line"></div><div class="line">plt.subplot(<span class="number">2</span>, <span class="number">1</span>, <span class="number">1</span>)</div><div class="line">plt.plot(x1, y1, <span class="string">'-o'</span>)</div><div class="line"></div><div class="line"></div><div class="line">plt.xlabel(<span class="string">'X doggy'</span>)</div><div class="line">plt.ylabel(<span class="string">'Damped oscillation'</span>)</div><div class="line">plt.title(<span class="string">'A tale of 2 subplots'</span>)</div><div class="line">plt.subplot(<span class="number">2</span>, <span class="number">1</span>, <span class="number">2</span>)</div><div class="line">plt.plot(x2, y2, <span class="string">'.:r'</span>)</div><div class="line">plt.xlabel(<span class="string">'time (s)'</span>)</div><div class="line">plt.ylabel(<span class="string">'Undamped'</span>)</div><div class="line">plt.title(<span class="string">'A tale of 2 subplots'</span>)</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<p><img src="output_9_0.png" alt="png"></p>
+<figure class="highlight"><table><tr><td class="code"><pre><div class="line">plt.plot?</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> seaborn</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="keyword">import</span> matplotlib.mlab <span class="keyword">as</span> mlab</div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line"></div><div class="line">np.random.seed(<span class="number">0</span>)</div><div class="line"></div><div class="line"><span class="comment"># example data</span></div><div class="line">mu = <span class="number">100</span>  <span class="comment"># mean of distribution</span></div><div class="line">sigma = <span class="number">15</span>  <span class="comment"># standard deviation of distribution</span></div><div class="line">x = mu + sigma * np.random.randn(<span class="number">437</span>)</div><div class="line"></div><div class="line">num_bins = <span class="number">50</span></div><div class="line"></div><div class="line">fig, ax = plt.subplots()</div><div class="line"></div><div class="line"><span class="comment"># the histogram of the data</span></div><div class="line">n, bins, patches = ax.hist(x, num_bins, normed=<span class="number">1</span>)</div><div class="line"></div><div class="line"><span class="comment"># add a 'best fit' line</span></div><div class="line">y = mlab.normpdf(bins, mu, sigma)</div><div class="line">ax.plot(bins, y, <span class="string">'--'</span>)</div><div class="line">ax.set_xlabel(<span class="string">'Smarts'</span>)</div><div class="line">ax.set_ylabel(<span class="string">'Probability density'</span>)</div><div class="line">ax.set_title(<span class="string">r'Histogram of IQ: $\mu=100$, $\sigma=15$'</span>)</div><div class="line"></div><div class="line"><span class="comment"># Tweak spacing to prevent clipping of ylabel</span></div><div class="line">fig.tight_layout()</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<p><img src="output_12_0.png" alt="png"></p>
+<h1 id="Histograms"><a href="#Histograms" class="headerlink" title="Histograms"></a>Histograms</h1><figure class="highlight python"><table><tr><td class="code"><pre><div class="line">np.random.randn(<span class="number">4</span>)</div></pre></td></tr></table></figure>
+<pre><code>array([ 0.00529265,  0.8005648 ,  0.07826018, -0.39522898])
+</code></pre><figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="keyword">import</span> matplotlib.mlab <span class="keyword">as</span> mlab</div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line"></div><div class="line">np.random.seed(<span class="number">0</span>)</div><div class="line"></div><div class="line"><span class="comment"># example data</span></div><div class="line">mu = <span class="number">0</span> <span class="comment"># mean of distribution</span></div><div class="line">sigma = <span class="number">100</span>  <span class="comment"># standard deviation of distribution</span></div><div class="line">x = mu + sigma * np.random.randn(<span class="number">437</span>)</div><div class="line"></div><div class="line">num_bins = <span class="number">30</span></div><div class="line"></div><div class="line">fig, ax = plt.subplots()</div><div class="line"></div><div class="line"><span class="comment"># the histogram of the data</span></div><div class="line">n, bins, patches = ax.hist(x, num_bins)</div><div class="line"></div><div class="line"><span class="comment"># add a 'best fit' line</span></div><div class="line">y = mlab.normpdf(bins, mu, sigma)</div><div class="line">ax.plot(bins, y, <span class="string">'--'</span>)</div><div class="line">ax.set_xlabel(<span class="string">u'Smarts'</span>)</div><div class="line">ax.set_ylabel(<span class="string">'Probability density'</span>)</div><div class="line">ax.set_title(<span class="string">r'Histogram of IQ: $\mu=&#123;&#125;$, $\sigma=&#123;&#125;$'</span>.format(mu,sigma))</div><div class="line">plt.grid(<span class="keyword">True</span>)</div><div class="line"><span class="comment"># Tweak spacing to prevent clipping of ylabel</span></div><div class="line">fig.tight_layout()</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<p><img src="output_15_0.png" alt="png"></p>
+<h1 id="jointplot"><a href="#jointplot" class="headerlink" title="jointplot"></a>jointplot</h1><figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="keyword">import</span> matplotlib.mlab <span class="keyword">as</span> mlab</div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="keyword">from</span> scipy.stats <span class="keyword">import</span> kendalltau</div><div class="line"><span class="keyword">import</span> seaborn <span class="keyword">as</span> sns</div><div class="line">sns.set(style=<span class="string">"ticks"</span>)</div><div class="line"></div><div class="line">rs = np.random.RandomState(<span class="number">11</span>)</div><div class="line">x = rs.gamma(<span class="number">2</span>, size=<span class="number">1000</span>)</div><div class="line">y = <span class="number">-.5</span> * x + rs.normal(size=<span class="number">1000</span>)</div><div class="line">plt.subplot(<span class="number">2</span>, <span class="number">1</span>, <span class="number">1</span>)</div><div class="line">sns.jointplot(x, y, kind=<span class="string">"kde"</span>, stat_func=kendalltau, color=<span class="string">"#9CB391"</span>,space=<span class="number">0.5</span>)</div><div class="line">plt.subplot(<span class="number">2</span>, <span class="number">1</span>, <span class="number">2</span>)</div><div class="line">sns.jointplot(x, y, kind=<span class="string">"hex"</span>, stat_func=<span class="keyword">None</span>, color=<span class="string">"#9CB391"</span>)</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<p><img src="output_17_0.png" alt="png"></p>
+<p><img src="output_17_1.png" alt="png"></p>
+<p><img src="output_17_2.png" alt="png"></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="keyword">import</span> matplotlib.mlab <span class="keyword">as</span> mlab</div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line"><span class="keyword">import</span> seaborn <span class="keyword">as</span> sns</div><div class="line">sns.set(style=<span class="string">"ticks"</span>)</div><div class="line"></div><div class="line"><span class="comment"># Load the example dataset for Anscombe's quartet</span></div><div class="line">df = sns.load_dataset(<span class="string">"anscombe"</span>)</div><div class="line"></div><div class="line"><span class="comment"># Show the results of a linear regression within each dataset</span></div><div class="line">sns.lmplot(x=<span class="string">"x"</span>, y=<span class="string">"y"</span>, col=<span class="string">"dataset"</span>, hue=<span class="string">"dataset"</span>, data=df,</div><div class="line">           col_wrap=<span class="number">2</span>, ci=<span class="keyword">None</span>, palette=<span class="string">"muted"</span>, size=<span class="number">4</span>,</div><div class="line">           scatter_kws=&#123;<span class="string">"s"</span>: <span class="number">50</span>, <span class="string">"alpha"</span>: <span class="number">1</span>&#125;)</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<p><img src="output_18_0.png" alt="png"></p>
+<h1 id="heatmap"><a href="#heatmap" class="headerlink" title="heatmap"></a>heatmap</h1><figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="keyword">from</span> scipy.stats <span class="keyword">import</span> kendalltau</div><div class="line"><span class="keyword">import</span> seaborn <span class="keyword">as</span> sns</div><div class="line">sns.set(style=<span class="string">"ticks"</span>)</div><div class="line"></div><div class="line">rs = np.random.RandomState(<span class="number">11</span>)</div><div class="line">x = rs.gamma(<span class="number">2</span>, size=<span class="number">1000</span>)</div><div class="line">y = <span class="number">-.5</span> * x + rs.normal(size=<span class="number">1000</span>)</div><div class="line"></div><div class="line">sns.jointplot(x, y, kind=<span class="string">"hex"</span>, stat_func=kendalltau, color=<span class="string">"#4CB391"</span>)</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<p><img src="output_20_0.png" alt="png"></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">from</span> pandas <span class="keyword">import</span> DataFrame</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line">df = DataFrame(&#123;<span class="string">'X'</span>:[<span class="string">'d'</span>,<span class="string">'g'</span>,<span class="string">'d'</span>,<span class="string">'miao'</span>,<span class="number">9</span>,<span class="number">3</span>],<span class="string">'Y'</span>:[<span class="number">11</span>,<span class="number">12</span>,<span class="number">13</span>,<span class="number">14</span>,<span class="number">15</span>,<span class="number">16</span>],<span class="string">'Z'</span>:[<span class="number">10</span>,<span class="number">20</span>,<span class="number">30</span>,<span class="number">40</span>,<span class="number">50</span>,<span class="number">60</span>]&#125;)</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line">plt.plot([<span class="number">1</span>,<span class="number">9</span>,<span class="number">3</span>,<span class="number">4</span>],<span class="string">'-o'</span>)</div><div class="line">plt.ylabel(<span class="string">'some numbers'</span>)</div><div class="line">plt.axis([<span class="number">0</span>, <span class="number">6</span>, <span class="number">0</span>, <span class="number">20</span>])</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<p><img src="output_23_0.png" alt="png"></p>
+<h1 id="Matplotlib-修饰"><a href="#Matplotlib-修饰" class="headerlink" title="Matplotlib 修饰"></a>Matplotlib 修饰</h1><h2 id="X轴，Y轴标签"><a href="#X轴，Y轴标签" class="headerlink" title="X轴，Y轴标签"></a>X轴，Y轴标签</h2><figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line">plt.plot([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>])</div><div class="line">plt.ylabel(<span class="string">'some numbers'</span>,fontsize=<span class="number">18</span>)</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<p><img src="output_26_0.png" alt="png"></p>
+<h2 id="X-Y-轴范围"><a href="#X-Y-轴范围" class="headerlink" title="X,Y 轴范围"></a>X,Y 轴范围</h2><figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line">plt.plot([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>], [<span class="number">1</span>,<span class="number">4</span>,<span class="number">9</span>,<span class="number">16</span>], <span class="string">'ro'</span>)</div><div class="line">plt.axis([<span class="number">-6</span>, <span class="number">6</span>, <span class="number">-5</span>, <span class="number">20</span>])</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<p><img src="output_28_0.png" alt="png"></p>
+<h2 id="点型，线型"><a href="#点型，线型" class="headerlink" title="点型，线型"></a>点型，线型</h2><figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line"></div><div class="line"><span class="comment"># evenly sampled time at 200ms intervals</span></div><div class="line">t = np.arange(<span class="number">0.</span>, <span class="number">5.</span>, <span class="number">0.2</span>)</div><div class="line"></div><div class="line"><span class="comment"># red dashes, blue squares and green triangles</span></div><div class="line">p1,p2,p3=plt.plot(t, t, <span class="string">'r--'</span>, t, t**<span class="number">2</span>, <span class="string">'bs'</span>, t, t**<span class="number">3</span>, <span class="string">'g^'</span>)</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<p><img src="output_30_0.png" alt="png"></p>
+<h3 id="折线图"><a href="#折线图" class="headerlink" title="折线图"></a>折线图</h3><figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line">plt.plot([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">4.7</span>,<span class="number">5.8</span>], [<span class="number">8</span>,<span class="number">4</span>,<span class="number">9</span>,<span class="number">0</span>,<span class="number">2.5</span>,<span class="number">17.4</span>], <span class="string">'r-o'</span>,linewidth=<span class="number">2</span>)</div><div class="line">plt.axis([<span class="number">0</span>, <span class="number">6</span>, <span class="number">0</span>, <span class="number">20</span>])</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<p><img src="output_32_0.png" alt="png"></p>
+<h3 id="Controlling-line-properties-控制线型"><a href="#Controlling-line-properties-控制线型" class="headerlink" title="Controlling line properties 控制线型"></a>Controlling line properties 控制线型</h3><figure class="highlight python"><table><tr><td class="code"><pre><div class="line">lines = plt.plot(x1, y1, x2, y2)</div><div class="line"><span class="comment"># use keyword args</span></div><div class="line">plt.setp(lines, color=<span class="string">'r'</span>, linewidth=<span class="number">2.0</span>)</div><div class="line"><span class="comment"># or MATLAB style string value pairs</span></div><div class="line">plt.setp(lines, <span class="string">'color'</span>, <span class="string">'r'</span>, <span class="string">'linewidth'</span>, <span class="number">2.0</span>)</div></pre></td></tr></table></figure>
+<pre><code>[None, None, None, None]
+</code></pre><figure class="highlight python"><table><tr><td class="code"><pre><div class="line">lines = plt.plot([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>])</div><div class="line">plt.setp(lines)</div></pre></td></tr></table></figure>
+<pre><code>agg_filter: unknown
+alpha: float (0.0 transparent through 1.0 opaque) 
+animated: [True | False] 
+antialiased or aa: [True | False] 
+axes: an :class:`~matplotlib.axes.Axes` instance 
+clip_box: a :class:`matplotlib.transforms.Bbox` instance 
+clip_on: [True | False] 
+clip_path: [ (:class:`~matplotlib.path.Path`, :class:`~matplotlib.transforms.Transform`) | :class:`~matplotlib.patches.Patch` | None ] 
+color or c: any matplotlib color 
+contains: a callable function 
+dash_capstyle: [&apos;butt&apos; | &apos;round&apos; | &apos;projecting&apos;] 
+dash_joinstyle: [&apos;miter&apos; | &apos;round&apos; | &apos;bevel&apos;] 
+dashes: sequence of on/off ink in points 
+drawstyle: [&apos;default&apos; | &apos;steps&apos; | &apos;steps-pre&apos; | &apos;steps-mid&apos; | &apos;steps-post&apos;] 
+figure: a :class:`matplotlib.figure.Figure` instance 
+fillstyle: [&apos;full&apos; | &apos;left&apos; | &apos;right&apos; | &apos;bottom&apos; | &apos;top&apos; | &apos;none&apos;] 
+gid: an id string 
+label: string or anything printable with &apos;%s&apos; conversion. 
+linestyle or ls: [&apos;solid&apos; | &apos;dashed&apos;, &apos;dashdot&apos;, &apos;dotted&apos; | (offset, on-off-dash-seq) | ``&apos;-&apos;`` | ``&apos;--&apos;`` | ``&apos;-.&apos;`` | ``&apos;:&apos;`` | ``&apos;None&apos;`` | ``&apos; &apos;`` | ``&apos;&apos;``]
+linewidth or lw: float value in points 
+marker: :mod:`A valid marker style &lt;matplotlib.markers&gt;`
+markeredgecolor or mec: any matplotlib color 
+markeredgewidth or mew: float value in points 
+markerfacecolor or mfc: any matplotlib color 
+markerfacecoloralt or mfcalt: any matplotlib color 
+markersize or ms: float 
+markevery: [None | int | length-2 tuple of int | slice | list/array of int | float | length-2 tuple of float]
+path_effects: unknown
+picker: float distance in points or callable pick function ``fn(artist, event)`` 
+pickradius: float distance in points 
+rasterized: [True | False | None] 
+sketch_params: unknown
+snap: unknown
+solid_capstyle: [&apos;butt&apos; | &apos;round&apos; |  &apos;projecting&apos;] 
+solid_joinstyle: [&apos;miter&apos; | &apos;round&apos; | &apos;bevel&apos;] 
+transform: a :class:`matplotlib.transforms.Transform` instance 
+url: a url string 
+visible: [True | False] 
+xdata: 1D array 
+ydata: 1D array 
+zorder: any number 
+</code></pre><h2 id="多图和多轴"><a href="#多图和多轴" class="headerlink" title="多图和多轴"></a>多图和多轴</h2><figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> seaborn <span class="keyword">as</span> sns</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">f</span><span class="params">(t)</span>:</span></div><div class="line">    <span class="keyword">return</span> np.exp(-t) * np.cos(<span class="number">2</span>*np.pi*t)</div><div class="line"></div><div class="line">t1 = np.arange(<span class="number">0.0</span>, <span class="number">5.0</span>, <span class="number">0.1</span>)</div><div class="line">t2 = np.arange(<span class="number">0.0</span>, <span class="number">5.0</span>, <span class="number">0.02</span>)</div><div class="line"></div><div class="line">plt.figure(<span class="number">1</span>)</div><div class="line">plt.subplot(<span class="number">211</span>)</div><div class="line">plt.plot(t1, f(t1), <span class="string">'bo'</span>, t2, f(t2), <span class="string">'k'</span>)</div><div class="line"></div><div class="line">plt.subplot(<span class="number">212</span>)</div><div class="line">plt.plot(t2, np.cos(<span class="number">2</span>*np.pi*t2), <span class="string">'r--'</span>)</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<p><img src="output_38_0.png" alt="png"></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line">            </div><div class="line"><span class="comment"># the first figure</span></div><div class="line">plt.subplots(figsize=(<span class="number">20</span>, <span class="number">10</span>))</div><div class="line">plt.subplot(<span class="number">211</span>)             <span class="comment"># the first subplot in the first figure</span></div><div class="line"></div><div class="line">plt.plot([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>])</div><div class="line">plt.subplot(<span class="number">212</span>)             <span class="comment"># the second subplot in the first figure</span></div><div class="line">plt.plot([<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>])</div><div class="line"></div><div class="line"></div><div class="line">plt.figure(<span class="number">2</span>)                <span class="comment"># a second figure</span></div><div class="line">plt.plot([<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>],<span class="string">'-o'</span>)          <span class="comment"># creates a subplot(111) by default</span></div><div class="line"></div><div class="line">plt.figure(<span class="number">1</span>)                <span class="comment"># figure 1 current; subplot(212) still current</span></div><div class="line">plt.subplot(<span class="number">211</span>)             <span class="comment"># make subplot(211) in figure1 current</span></div><div class="line">plt.title(<span class="string">'Easy as 1, 2, 3'</span>) <span class="comment"># subplot 211 title</span></div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<p><img src="output_39_0.png" alt="png"></p>
+<p><img src="output_39_1.png" alt="png"></p>
+<h2 id="使用文本-Working-with-text"><a href="#使用文本-Working-with-text" class="headerlink" title="使用文本  Working with text"></a>使用文本  Working with text</h2><p>xlabel,ylabel,title,text 都可以使用文本</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line"></div><div class="line"><span class="comment"># Fixing random state for reproducibility</span></div><div class="line">np.random.seed(<span class="number">19680801</span>)</div><div class="line"></div><div class="line">mu, sigma = <span class="number">100</span>, <span class="number">15</span></div><div class="line">x = mu + sigma * np.random.randn(<span class="number">10000</span>)</div><div class="line"></div><div class="line"><span class="comment"># the histogram of the data</span></div><div class="line">n, bins, patches = plt.hist(x, <span class="number">50</span>, normed=<span class="number">1</span>, facecolor=<span class="string">'g'</span>, alpha=<span class="number">0.75</span>)</div><div class="line"></div><div class="line"></div><div class="line">plt.xlabel(<span class="string">'Smarts'</span>)</div><div class="line">plt.ylabel(<span class="string">'Probability'</span>)</div><div class="line">plt.title(<span class="string">'Histogram of IQ'</span>)</div><div class="line">plt.text(<span class="number">60</span>, <span class="number">.025</span>, <span class="string">r'$\mu=100,\ \sigma=15$'</span>)<span class="comment">#\sum _&#123; i=0 &#125;^&#123; 1000 &#125;&#123; x3 &#125; </span></div><div class="line">plt.axis([<span class="number">40</span>, <span class="number">160</span>, <span class="number">0</span>, <span class="number">0.03</span>])</div><div class="line">plt.grid(<span class="keyword">True</span>)</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<p><img src="output_42_0.png" alt="png"></p>
+<h3 id="使用数学表达式-Using-mathematical-expressions-in-text"><a href="#使用数学表达式-Using-mathematical-expressions-in-text" class="headerlink" title="使用数学表达式 Using mathematical expressions in text"></a>使用数学表达式 Using mathematical expressions in text</h3><p>使用TeX 表达式 equation expressions<br><a href="http://s1.daumcdn.net/editor/fp/service_nc/pencil/Pencil_chromestore.html" target="_blank" rel="external">Tex表达式生成网址</a></p>
+<h3 id="注释文本-Annotating-text"><a href="#注释文本-Annotating-text" class="headerlink" title="注释文本  Annotating text"></a>注释文本  Annotating text</h3><figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line">plt.figure()</div><div class="line">ax = plt.subplot(<span class="number">111</span>)</div><div class="line"></div><div class="line">t = np.arange(<span class="number">0.0</span>, <span class="number">5.0</span>, <span class="number">0.01</span>)</div><div class="line">s = np.cos(<span class="number">2</span>*np.pi*t)</div><div class="line">line, = plt.plot(t, s, lw=<span class="number">2</span>)</div><div class="line"></div><div class="line">plt.annotate(<span class="string">'local max'</span>, xy=(<span class="number">2</span>, <span class="number">1</span>), xytext=(<span class="number">3</span>, <span class="number">1.5</span>),</div><div class="line">            arrowprops=dict(facecolor=<span class="string">'black'</span>, shrink=<span class="number">0.05</span>),</div><div class="line">            )</div><div class="line"></div><div class="line">plt.ylim(<span class="number">-2</span>,<span class="number">2</span>)</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<p><img src="output_47_0.png" alt="png"></p>
+<h3 id="对数轴-和其他非线性轴-Logarithmic-and-other-nonlinear-axis"><a href="#对数轴-和其他非线性轴-Logarithmic-and-other-nonlinear-axis" class="headerlink" title="对数轴 和其他非线性轴  Logarithmic and other nonlinear axis"></a>对数轴 和其他非线性轴  Logarithmic and other nonlinear axis</h3><figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line"></div><div class="line"><span class="keyword">from</span> matplotlib.ticker <span class="keyword">import</span> NullFormatter  <span class="comment"># useful for `logit` scale</span></div><div class="line"></div><div class="line"><span class="comment"># Fixing random state for reproducibility</span></div><div class="line">np.random.seed(<span class="number">19680801</span>)</div><div class="line"></div><div class="line"><span class="comment"># make up some data in the interval ]0, 1[</span></div><div class="line">y = np.random.normal(loc=<span class="number">0.5</span>, scale=<span class="number">0.4</span>, size=<span class="number">1000</span>)</div><div class="line">y = y[(y &gt; <span class="number">0</span>) &amp; (y &lt; <span class="number">1</span>)]</div><div class="line">y.sort()</div><div class="line">x = np.arange(len(y))</div><div class="line"></div><div class="line"><span class="comment"># plot with various axes scales</span></div><div class="line">plt.figure(figsize=(<span class="number">20</span>,<span class="number">10</span>))</div><div class="line"><span class="comment"># linear</span></div><div class="line">plt.subplot(<span class="number">221</span>)</div><div class="line">plt.plot(x, y)</div><div class="line">plt.yscale(<span class="string">'linear'</span>)</div><div class="line">plt.title(<span class="string">'linear'</span>)</div><div class="line">plt.grid(<span class="keyword">True</span>)</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment"># log</span></div><div class="line">plt.subplot(<span class="number">222</span>)</div><div class="line">plt.plot(x, y)</div><div class="line">plt.yscale(<span class="string">'log'</span>)</div><div class="line">plt.title(<span class="string">'log'</span>)</div><div class="line">plt.grid(<span class="keyword">True</span>)</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment"># symmetric log</span></div><div class="line">plt.subplot(<span class="number">223</span>)</div><div class="line">plt.plot(x, y - y.mean())</div><div class="line">plt.yscale(<span class="string">'symlog'</span>, linthreshy=<span class="number">0.01</span>)</div><div class="line">plt.title(<span class="string">'symlog'</span>)</div><div class="line">plt.grid(<span class="keyword">True</span>)</div><div class="line"></div><div class="line"><span class="comment"># logit</span></div><div class="line">plt.subplot(<span class="number">224</span>)</div><div class="line">plt.plot(x, y)</div><div class="line">plt.yscale(<span class="string">'logit'</span>)</div><div class="line">plt.title(<span class="string">'logit'</span>)</div><div class="line">plt.grid(<span class="keyword">True</span>)</div><div class="line"><span class="comment"># Format the minor tick labels of the y-axis into empty strings with</span></div><div class="line"><span class="comment"># `NullFormatter`, to avoid cumbering the axis with too many labels.</span></div><div class="line">plt.gca().yaxis.set_minor_formatter(NullFormatter())</div><div class="line"><span class="comment"># Adjust the subplot layout, because the logit one may take more space</span></div><div class="line"><span class="comment"># than usual, due to y-tick labels like "1 - 10^&#123;-3&#125;"</span></div><div class="line">plt.subplots_adjust(top=<span class="number">0.92</span>, bottom=<span class="number">0.08</span>, left=<span class="number">0.10</span>, right=<span class="number">0.95</span>, hspace=<span class="number">0.25</span>,</div><div class="line">                    wspace=<span class="number">0.35</span>)</div><div class="line"></div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<p><img src="output_49_0.png" alt="png"></p>
+<h2 id="图片的放大与缩小"><a href="#图片的放大与缩小" class="headerlink" title="图片的放大与缩小"></a>图片的放大与缩小</h2><p>plt.figure(figsize=(16,9))fig, ax = plt.subplots(figsize=(20, 10))</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line">plt.figure(figsize=(<span class="number">16</span>,<span class="number">9</span>))</div><div class="line">ax = plt.subplot(<span class="number">111</span>)</div><div class="line"></div><div class="line">t = np.arange(<span class="number">0.0</span>, <span class="number">5.0</span>, <span class="number">0.01</span>)</div><div class="line">s = np.cos(<span class="number">2</span>*np.pi*t)</div><div class="line">line, = plt.plot(t, s, lw=<span class="number">2</span>)</div><div class="line"></div><div class="line">plt.annotate(<span class="string">'local max'</span>, xy=(<span class="number">2</span>, <span class="number">1</span>), xytext=(<span class="number">3</span>, <span class="number">1.5</span>),</div><div class="line">            arrowprops=dict(facecolor=<span class="string">'black'</span>, shrink=<span class="number">0.05</span>),</div><div class="line">            )</div><div class="line"></div><div class="line">plt.ylim(<span class="number">-2</span>,<span class="number">2</span>)</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<p><img src="output_53_0.png" alt="png"></p>
+
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    
+                    <li class="next">
+                        <a href="/post/linux下一些省时间提升效率的小技巧(一)/" data-toggle="tooltip" data-placement="top"
+                           title="linux 下一些省时间提升效率的小技巧(一)">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+
+                
+
+
+                <!--加入新的评论系统-->
+                
+                <!-- 来必力City版安装代码 -->
+                <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTMwMy81ODcx">
+                    <script type="text/javascript">
+                        (function(d, s) {
+                            var j, e = d.getElementsByTagName(s)[0];
+
+                            if (typeof LivereTower === 'function') { return; }
+
+                            j = d.createElement(s);
+                            j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+                            j.async = true;
+
+                            e.parentNode.insertBefore(j, e);
+                        })(document, 'script');
+                    </script>
+                    <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+                </div>
+                <!-- City版安装代码已完成 -->
+                
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#解决中文字体不能显示问题"><span class="toc-text">解决中文字体不能显示问题</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#引入seaborn"><span class="toc-text">引入seaborn</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Simple-Plot"><span class="toc-text">Simple Plot</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Subplot-demo"><span class="toc-text">Subplot demo</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Histograms"><span class="toc-text">Histograms</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#jointplot"><span class="toc-text">jointplot</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#heatmap"><span class="toc-text">heatmap</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Matplotlib-修饰"><span class="toc-text">Matplotlib 修饰</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#X轴，Y轴标签"><span class="toc-text">X轴，Y轴标签</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#X-Y-轴范围"><span class="toc-text">X,Y 轴范围</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#点型，线型"><span class="toc-text">点型，线型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#折线图"><span class="toc-text">折线图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Controlling-line-properties-控制线型"><span class="toc-text">Controlling line properties 控制线型</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#多图和多轴"><span class="toc-text">多图和多轴</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用文本-Working-with-text"><span class="toc-text">使用文本  Working with text</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用数学表达式-Using-mathematical-expressions-in-text"><span class="toc-text">使用数学表达式 Using mathematical expressions in text</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#注释文本-Annotating-text"><span class="toc-text">注释文本  Annotating text</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#对数轴-和其他非线性轴-Logarithmic-and-other-nonlinear-axis"><span class="toc-text">对数轴 和其他非线性轴  Logarithmic and other nonlinear axis</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#图片的放大与缩小"><span class="toc-text">图片的放大与缩小</span></a></li></ol></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#matplotlib"
+                           title="matplotlib">matplotlib</a>
+                        
+                        <a class="tag" href="/tags/#可视化"
+                           title="可视化">可视化</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <div style="margin-top: 20px;">
+                    <h5 class="text-center">FRIENDS</h5>
+                    <ul class="list-inline text-center">
+                        
+                        <li><a href="https://monkey0105.github.io/">monkey0105</a></li>
+                        
+                    </ul>
+                </div>
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                    <li>
+                        <a target="_blank" href="https://twitter.com/xuzhang999">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/zhang-xu-4-1">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/zhangxu999">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/zhangxu999">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; 数据菜园 2017
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://github.com/zhangxu999">zhangxu999</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://zhangxu999.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-102034353-1';
+    var _gaDomain = 'auto';
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    var _baId = '5ed6f220ecf21881de873de55b319f7a';
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?" + _baId;
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','null','2.0.0');
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="avatar.jpg">
+</body>
+
+</html>
