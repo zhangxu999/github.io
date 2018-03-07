@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="张旭在 Github 上的个人博客">
+    <meta name="keyword" content="null">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="/myico.ico">
+    <link rel="alternate" type="application/atom+xml" title="数据菜园" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        数据菜园
+        
+    </title>
+
+    <link rel="canonical" href="http://zhangxu999.github.io/post/Make_a_Search_engine/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('//o7bkkhiex.bkt.clouddn.com/lion-blur-bg.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    数据菜园
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+                        <li>
+                            <a href="/tags/">tags</a>
+                        </li>
+							
+						
+                    
+					
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img"
+     src="/post-default.jpg">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('/post-default.jpg')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1></h1>
+                    
+                    <span class="meta">
+                         作者 张旭
+                        <span>
+                          日期 2018-03-07
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <h1 id="用Python做一个简单的搜索引擎"><a href="#用Python做一个简单的搜索引擎" class="headerlink" title="用Python做一个简单的搜索引擎"></a>用Python做一个简单的搜索引擎</h1><p>  我们在用百度、谷歌等搜东西的时候，也许会想，搜索引擎是怎么找出这些相关的东西的呢？<br>本文，我将用Python和相关工具做一个搜索引擎，实现搜索引擎的核心原理。<br>(至于效果，额… 当然和百度谷歌有不少的差距，我不说了嘛，只是实现核心原理，并力求不写太多的代码） </p>
+<h1 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h1><p>  让我们来思考这样一个问题：，当你在搜索引擎上搜索一个词的时候，你想把与输入内容最匹配的网页显示在前面。<br>那么我们搜索的任务就变成了根据输入内容，对网页与输入内容的重要性打分排序的任务。</p>
+<p>  假如，我们要搜索 “美国对朝鲜的核武器政策”<br>首先我们对这句话分词，并去除常用词，得到  ‘美国 朝鲜 核武器 政策’<br>直观来考虑，我们要统计每个词语在每篇文章中出现的频率，然后将频率之和相加，排序，频率和高文章就排在前面<br>每个词在每篇文章中的频率叫做TF （term frequency）</p>
+<p>   但是这样作就没问题吗？<br>比如，’美国’ 这个在网络中的频率要必’朝鲜’，’核武器’更高，’政策’也是。<br>如果我们将频率和相加对文档排序，那么含有”美国”，和”政策”的文档，将会排在前面，虽然这些文档并不是有关朝鲜和美国核政策的。</p>
+<p>   这时我们就需要对每个词语的重要性作量化，也就是说，在全部文档中，”美国”，”政策” 要比 ”核武器“ ”政策“ 出现的多，按照信息论的解释来说，就是后者提供的信息更多</p>
+<p>假设词语w 在 D 个文档中共有Dw个文档包含w词，常用的一项指标是IDF = log(D/Dw) (Dw和D 通常会加1处理，拉普拉斯平滑)来表达词语出现的频率次数。IDF（Inverse documentfrequency）叫做“逆文本频率指数。</p>
+<p>一个查询词的贡献度现在变成了 TF×IDF。<br>那么我们就要计算 查询词的TF×IDF之和就好了。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> nltk</div><div class="line"><span class="keyword">import</span> re</div><div class="line"><span class="keyword">import</span> jieba</div><div class="line"><span class="keyword">import</span> os</div><div class="line"><span class="keyword">from</span> functools <span class="keyword">import</span> reduce</div></pre></td></tr></table></figure>
+<h1 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h1><p>使用结巴分词；一个搜狗语料库；</p>
+<h1 id="读入数据"><a href="#读入数据" class="headerlink" title="读入数据"></a>读入数据</h1><h3 id="我们以搜狗的一个新闻数据集为例，来用简短的Python代码实现一个简单的TF-IDF”搜索引擎”"><a href="#我们以搜狗的一个新闻数据集为例，来用简短的Python代码实现一个简单的TF-IDF”搜索引擎”" class="headerlink" title="我们以搜狗的一个新闻数据集为例，来用简短的Python代码实现一个简单的TF-IDF”搜索引擎”"></a>我们以搜狗的一个新闻数据集为例，来用简短的Python代码实现一个简单的TF-IDF”搜索引擎”</h3><figure class="highlight python"><table><tr><td class="code"><pre><div class="line">all_Texts = []</div><div class="line">count= <span class="number">0</span></div><div class="line">err_count = <span class="number">0</span></div><div class="line">folder = <span class="string">'corpus'</span></div><div class="line"><span class="keyword">for</span> f_name <span class="keyword">in</span> os.listdir(folder):</div><div class="line">    <span class="keyword">try</span>:</div><div class="line">        <span class="keyword">with</span> open(folder+<span class="string">'/'</span>+f_name,encoding=<span class="string">'GBK'</span>,errors=<span class="string">'ignore'</span>) <span class="keyword">as</span> f:</div><div class="line">            all_Texts.append(f.read())</div><div class="line">        count+=<span class="number">1</span></div><div class="line">        <span class="comment">#print(count,end=';')</span></div><div class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</div><div class="line">        print(<span class="string">'ERROR'</span>,f_name,err_count,end=<span class="string">';'</span>)</div><div class="line">        err_count+=<span class="number">1</span></div></pre></td></tr></table></figure>
+<h1 id="预处理"><a href="#预处理" class="headerlink" title="预处理"></a>预处理</h1><h3 id="加载停用词表-停用词是一些很常见，但对句子的构成意义不大的常见字的集合，比如’的，是，is-and-‘"><a href="#加载停用词表-停用词是一些很常见，但对句子的构成意义不大的常见字的集合，比如’的，是，is-and-‘" class="headerlink" title="加载停用词表,停用词是一些很常见，但对句子的构成意义不大的常见字的集合，比如’的，是，is and ‘"></a>加载停用词表,停用词是一些很常见，但对句子的构成意义不大的常见字的集合，比如’的，是，is and ‘</h3><figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">with</span> open(<span class="string">'stopwords.txt'</span>) <span class="keyword">as</span> f_stop:</div><div class="line">    stop_words = [i.strip(<span class="string">'\n'</span>) <span class="keyword">for</span> i <span class="keyword">in</span> f_stop.readlines()]</div><div class="line">    my_own_stop_words = [<span class="string">'nbsp'</span>]</div><div class="line">    stop_words += my_own_stop_words</div></pre></td></tr></table></figure>
+<h3 id="我们使用分词工具是jieba-这个函数去除停用词，并分词"><a href="#我们使用分词工具是jieba-这个函数去除停用词，并分词" class="headerlink" title="我们使用分词工具是jieba .这个函数去除停用词，并分词"></a>我们使用分词工具是jieba .这个函数去除停用词，并分词</h3><figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">text_process</span><span class="params">(text)</span>:</span></div><div class="line">        </div><div class="line">    pattern = <span class="string">'[\u4e00-\u9fa5|[0-9a-zA-Z]&#123;1,&#125;'</span></div><div class="line">    <span class="comment">#print('===============RAW=====================',text,sep='\n')</span></div><div class="line">    chinesewords = re.findall(pattern,text)</div><div class="line">    <span class="comment">#print('================find Chinese======================',chinesewords,sep='\n')</span></div><div class="line">    raw_words = [word <span class="keyword">for</span> word <span class="keyword">in</span> re.findall(pattern,text) <span class="keyword">if</span> word <span class="keyword">not</span> <span class="keyword">in</span> stop_words]</div><div class="line">    <span class="comment">#print('===============remove stopwords=====================',raw_words,sep='\n')</span></div><div class="line">    cuted_words = [list(jieba.cut(i)) <span class="keyword">for</span> i <span class="keyword">in</span> raw_words]</div><div class="line">    <span class="comment">#print('===============Jieba cuted_words=====================',cuted_words,sep='\n')</span></div><div class="line">    used_words=list(filter(<span class="keyword">lambda</span> x:x <span class="keyword">not</span> <span class="keyword">in</span> stop_words,reduce(<span class="keyword">lambda</span> x,y:x+y,cuted_words)))</div><div class="line">    <span class="comment">#print('===============remove jeba stopwords=====================',a,sep='\n')</span></div><div class="line">    </div><div class="line">    <span class="keyword">return</span> used_words</div></pre></td></tr></table></figure>
+<h1 id="使用sklean-中相关工具，统计词频"><a href="#使用sklean-中相关工具，统计词频" class="headerlink" title="使用sklean 中相关工具，统计词频"></a>使用sklean 中相关工具，统计词频</h1><figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">from</span> sklearn.feature_extraction.text <span class="keyword">import</span> CountVectorizer</div></pre></td></tr></table></figure>
+<h3 id="对文档库中出现的词语编号"><a href="#对文档库中出现的词语编号" class="headerlink" title="对文档库中出现的词语编号"></a>对文档库中出现的词语编号</h3><figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="comment"># Might take awhile...</span></div><div class="line">bow_transformer = CountVectorizer(analyzer=text_process).fit(all_Texts)</div></pre></td></tr></table></figure>
+<pre><code>Building prefix dict from the default dictionary ...
+Loading model from cache /tmp/jieba.cache
+Loading model cost 0.642 seconds.
+Prefix dict has been built succesfully.
+</code></pre><h3 id="统计词库中bow-transformer-在每个文档中出现的次数，得到词语-文档，次数矩阵"><a href="#统计词库中bow-transformer-在每个文档中出现的次数，得到词语-文档，次数矩阵" class="headerlink" title="统计词库中bow_transformer 在每个文档中出现的次数，得到词语-文档，次数矩阵"></a>统计词库中bow_transformer 在每个文档中出现的次数，得到词语-文档，次数矩阵</h3><figure class="highlight python"><table><tr><td class="code"><pre><div class="line">messages_bow = bow_transformer.transform(all_Texts)</div></pre></td></tr></table></figure>
+<h3 id="得到每个词在每个文档中的TF-IDF矩阵"><a href="#得到每个词在每个文档中的TF-IDF矩阵" class="headerlink" title="得到每个词在每个文档中的TF-IDF矩阵"></a>得到每个词在每个文档中的TF-IDF矩阵</h3><figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">from</span> sklearn.feature_extraction.text <span class="keyword">import</span> TfidfTransformer</div><div class="line"></div><div class="line">tfidf_transformer = TfidfTransformer().fit(messages_bow)</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line">messages_tfidf = tfidf_transformer.transform(messages_bow)</div></pre></td></tr></table></figure>
+<h1 id="搜索"><a href="#搜索" class="headerlink" title="搜索"></a>搜索</h1><figure class="highlight python"><table><tr><td class="code"><pre><div class="line">s_words = input(<span class="string">'请输入搜索内容:'</span>)</div></pre></td></tr></table></figure>
+<pre><code>请输入搜索内容:企鹅 南极
+</code></pre><h3 id="使用和生成IDF一样的词处理办法来查询词"><a href="#使用和生成IDF一样的词处理办法来查询词" class="headerlink" title="使用和生成IDF一样的词处理办法来查询词"></a>使用和生成IDF一样的词处理办法来查询词</h3><figure class="highlight python"><table><tr><td class="code"><pre><div class="line">key_words=text_process(s_words)</div><div class="line"></div><div class="line">print(key_words)</div></pre></td></tr></table></figure>
+<pre><code>[&apos;企鹅&apos;, &apos;南极&apos;]
+</code></pre><h3 id="获取查询词的index"><a href="#获取查询词的index" class="headerlink" title="获取查询词的index"></a>获取查询词的index</h3><figure class="highlight python"><table><tr><td class="code"><pre><div class="line">key_words =[bow_transformer.vocabulary_.get(i) <span class="keyword">for</span> i <span class="keyword">in</span> key_words <span class="keyword">if</span> bow_transformer.vocabulary_.get(i)]</div></pre></td></tr></table></figure>
+<h3 id="获取包含查询词的文档集合的index"><a href="#获取包含查询词的文档集合的index" class="headerlink" title="获取包含查询词的文档集合的index"></a>获取包含查询词的文档集合的index</h3><figure class="highlight python"><table><tr><td class="code"><pre><div class="line">message_idx = [messages_tfidf[:,i].nonzero()[<span class="number">0</span>] <span class="keyword">for</span> i <span class="keyword">in</span> key_words]</div><div class="line">message_idx = list(reduce(<span class="keyword">lambda</span> x,y:set(x)|set(y),message_idx))</div></pre></td></tr></table></figure>
+<h3 id="计算上述文档中，查询词的TF-IDF之和"><a href="#计算上述文档中，查询词的TF-IDF之和" class="headerlink" title="计算上述文档中，查询词的TF-IDF之和"></a>计算上述文档中，查询词的TF-IDF之和</h3><figure class="highlight python"><table><tr><td class="code"><pre><div class="line">TFIDFS = [sum([messages_tfidf[i,j] <span class="keyword">for</span> j <span class="keyword">in</span> key_words]) <span class="keyword">for</span> i <span class="keyword">in</span> list(message_idx)]</div></pre></td></tr></table></figure>
+<h3 id="文档index-TF-IDF和字典对应"><a href="#文档index-TF-IDF和字典对应" class="headerlink" title="文档index ,TF-IDF和字典对应"></a>文档index ,TF-IDF和字典对应</h3><figure class="highlight python"><table><tr><td class="code"><pre><div class="line">idx_tfidf = dict(zip(message_idx,TFIDFS))</div></pre></td></tr></table></figure>
+<h3 id="按照tfidf排序"><a href="#按照tfidf排序" class="headerlink" title="按照tfidf排序"></a>按照tfidf排序</h3><figure class="highlight python"><table><tr><td class="code"><pre><div class="line">sorted_idxs = sorted(message_idx,key=<span class="keyword">lambda</span> x:idx_tfidf[x],reverse=<span class="keyword">True</span>)</div></pre></td></tr></table></figure>
+<h3 id="根据文档index-检索文本库"><a href="#根据文档index-检索文本库" class="headerlink" title="根据文档index,检索文本库"></a>根据文档index,检索文本库</h3><figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">for</span> i,mess <span class="keyword">in</span> enumerate(sorted_idxs[:<span class="number">10</span>]):</div><div class="line">    print(<span class="string">'=============='</span>,i,idx_tfidf[mess],<span class="string">'==================='</span>)</div><div class="line">    print(all_Texts[mess][:<span class="number">100</span>],<span class="string">'........'</span>)</div></pre></td></tr></table></figure>
+<pre><code>============== 0 0.845949552012 ===================
+
+　　　遥远而神秘的冰雪大陆--南极，以其无与伦比的自然风光和奇妙独特的刺激感受，强烈地吸引着世界旅游者的目光。作为中国一个普通公民，何时可以到南极去旅游？带着这个令每一位读者都怦然心动的问题，记者采 ........
+============== 1 0.667916619709 ===================
+
+　　英国科学家发现，被厚厚冰层所覆盖的南极湖泊湖水相连，形成一个庞大的地下水系。由于南极湖泊相互之间并非是人们所设想的隔离状态，对任何湖泊的钻探都可能导致整个水系的污染，因此科学家呼吁要慎重勘探南极 ........
+============== 2 0.667916619709 ===================
+
+　　英国科学家发现，被厚厚冰层所覆盖的南极湖泊湖水相连，形成一个庞大的地下水系。由于南极湖泊相互之间并非是人们所设想的隔离状态，对任何湖泊的钻探都可能导致整个水系的污染，因此科学家呼吁要慎重勘探南极 ........
+============== 3 0.531403456215 ===================
+
+　　大自然的力量，究竟有多大？人类的体能和意志，有没有极限？日前，人类首次划皮艇征服南极的戈尔“冒险哲学”探险队抵达中国展开中国巡回秀，他们通过精美的图片展和大量的影像资料，在广州[图库]向户外运动 ........
+============== 4 0.500867204563 ===================
+　　中国日报网站消息：中国拟在南极中山站建设一部高频雷达，用于对极区空间环境的探测和研究。而这个纯粹的科考项目却引起了美国军方的“关注和担忧”。美国《世界论坛报》2月2日报道说，美国军事专家担心中国此 ........
+============== 5 0.480971843171 ===================
+
+
+
+
+
+好望角上的震撼 
+　　孩提时神往的好望角，就在眼前。 
+　　好望角在开普敦半岛最南端，这里是保留了500年前原生态的自然保护区。在大西洋边红色的卵石滩上，时常可见驼鸟闲庭信步的可爱模样。 
+ ........
+============== 6 0.434699161277 ===================
+　　撰稿/葛叶龙　　如果南极洲塌陷了，毫无疑问将对全球产生巨大影响——当然，这不是明天就会发生的事，南极洲可是个大家伙。　　从飞机上看下去，南极艾博特(Abbott)冰架是白茫茫一片，再往前看，是一直 ........
+============== 7 0.358458239071 ===================
+　　一直以为企鹅、海豹这类生物只有在南极这样的地方才会看见，亲临南非，才发现南非原来也有这种生存在冰冷地带的动物。如果你圣诞行程匆忙而来不及欣赏这些可爱的动物也不要失望，你可以选择夏天的时候去南非，炎 ........
+============== 8 0.339872478483 ===================
+
+　　临床医生和牙医都利用121 ℃的高压蒸汽来灭菌消毒，因为在这么高的温度中所有的生物都会死掉。可是一些新发现的细菌却是例外，它们不仅在121 
+℃中还生长良好，在130 ℃的高温中还能够生存。　
+ ........
+============== 9 0.336407059772 ===================
+
+　　新华网伦敦４月２０日电 英国科学家日前宣布，他们在南极冰层下发现了河流。这些河流可能连接着冰下湖。
+　　伦敦大学学院和自然环境研究协会极地观测中心的科学家研究了欧洲航天局ＥＲＳ－２卫星对南极东部 ........
+</code></pre><h3 id="大功告成！！！-这样你就可以自建语料库，生成TF-IDF矩阵，完成查询啦！，如果文中还有链接，那么就可以再此基础上对网页用Pagerank算法排序，这就是一个现代意义上搜索引擎的雏形了。"><a href="#大功告成！！！-这样你就可以自建语料库，生成TF-IDF矩阵，完成查询啦！，如果文中还有链接，那么就可以再此基础上对网页用Pagerank算法排序，这就是一个现代意义上搜索引擎的雏形了。" class="headerlink" title="大功告成！！！ 这样你就可以自建语料库，生成TF-IDF矩阵，完成查询啦！，如果文中还有链接，那么就可以再此基础上对网页用Pagerank算法排序，这就是一个现代意义上搜索引擎的雏形了。"></a>大功告成！！！ 这样你就可以自建语料库，生成TF-IDF矩阵，完成查询啦！，如果文中还有链接，那么就可以再此基础上对网页用Pagerank算法排序，这就是一个现代意义上搜索引擎的雏形了。</h3>
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    
+                    <li class="next">
+                        <a href="/post/matplotlib常用图形/" data-toggle="tooltip" data-placement="top"
+                           title="matplotlib常用图形">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+
+                
+
+
+                <!--加入新的评论系统-->
+                
+                <!-- 来必力City版安装代码 -->
+                <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTMwMy81ODcx">
+                    <script type="text/javascript">
+                        (function(d, s) {
+                            var j, e = d.getElementsByTagName(s)[0];
+
+                            if (typeof LivereTower === 'function') { return; }
+
+                            j = d.createElement(s);
+                            j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+                            j.async = true;
+
+                            e.parentNode.insertBefore(j, e);
+                        })(document, 'script');
+                    </script>
+                    <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+                </div>
+                <!-- City版安装代码已完成 -->
+                
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#用Python做一个简单的搜索引擎"><span class="toc-text">用Python做一个简单的搜索引擎</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#原理"><span class="toc-text">原理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#工具"><span class="toc-text">工具</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#读入数据"><span class="toc-text">读入数据</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#我们以搜狗的一个新闻数据集为例，来用简短的Python代码实现一个简单的TF-IDF”搜索引擎”"><span class="toc-text">我们以搜狗的一个新闻数据集为例，来用简短的Python代码实现一个简单的TF-IDF”搜索引擎”</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#预处理"><span class="toc-text">预处理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#加载停用词表-停用词是一些很常见，但对句子的构成意义不大的常见字的集合，比如’的，是，is-and-‘"><span class="toc-text">加载停用词表,停用词是一些很常见，但对句子的构成意义不大的常见字的集合，比如’的，是，is and ‘</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#我们使用分词工具是jieba-这个函数去除停用词，并分词"><span class="toc-text">我们使用分词工具是jieba .这个函数去除停用词，并分词</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#使用sklean-中相关工具，统计词频"><span class="toc-text">使用sklean 中相关工具，统计词频</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#对文档库中出现的词语编号"><span class="toc-text">对文档库中出现的词语编号</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#统计词库中bow-transformer-在每个文档中出现的次数，得到词语-文档，次数矩阵"><span class="toc-text">统计词库中bow_transformer 在每个文档中出现的次数，得到词语-文档，次数矩阵</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#得到每个词在每个文档中的TF-IDF矩阵"><span class="toc-text">得到每个词在每个文档中的TF-IDF矩阵</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#搜索"><span class="toc-text">搜索</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用和生成IDF一样的词处理办法来查询词"><span class="toc-text">使用和生成IDF一样的词处理办法来查询词</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#获取查询词的index"><span class="toc-text">获取查询词的index</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#获取包含查询词的文档集合的index"><span class="toc-text">获取包含查询词的文档集合的index</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#计算上述文档中，查询词的TF-IDF之和"><span class="toc-text">计算上述文档中，查询词的TF-IDF之和</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#文档index-TF-IDF和字典对应"><span class="toc-text">文档index ,TF-IDF和字典对应</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#按照tfidf排序"><span class="toc-text">按照tfidf排序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#根据文档index-检索文本库"><span class="toc-text">根据文档index,检索文本库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#大功告成！！！-这样你就可以自建语料库，生成TF-IDF矩阵，完成查询啦！，如果文中还有链接，那么就可以再此基础上对网页用Pagerank算法排序，这就是一个现代意义上搜索引擎的雏形了。"><span class="toc-text">大功告成！！！ 这样你就可以自建语料库，生成TF-IDF矩阵，完成查询啦！，如果文中还有链接，那么就可以再此基础上对网页用Pagerank算法排序，这就是一个现代意义上搜索引擎的雏形了。</span></a></li></ol></li></ol></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                    <li>
+                        <a target="_blank" href="https://twitter.com/xuzhang999">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/zhang-xu-4-1">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/zhangxu999">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/zhangxu999">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; 数据菜园 2018
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://github.com/zhangxu999">zhangxu999</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://zhangxu999.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-102034353-1';
+    var _gaDomain = 'auto';
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    var _baId = '5ed6f220ecf21881de873de55b319f7a';
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?" + _baId;
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','null','2.0.0');
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="avatar.jpg">
+</body>
+
+</html>
